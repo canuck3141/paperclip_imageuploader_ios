@@ -1,21 +1,21 @@
 /*
  Copyright (c) 2011, Joel Shapiro
  All rights reserved.
- 
+
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
- 
+
  * Redistributions of source code must retain the above copyright notice, this
  list of conditions and the following disclaimer.
- 
+
  * Redistributions in binary form must reproduce the above copyright notice,
  this list of conditions and the following disclaimer in the documentation
  and/or other materials provided with the distribution.
- 
+
  * Neither the name of the author nor the names of its contributors may be
  used to endorse or promote products derived from this software without
  specific prior written permission.
- 
+
  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -72,13 +72,13 @@ const NSUInteger kDefaultBodySize = 100 * 1024;
 
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
     [request addValue:[NSString stringWithFormat:@"multipart/form-data; boundary=%@", kDefaultBoundary] forHTTPHeaderField:@"Content-Type"];
-    
+
     // Determine the Content-Type/mime type of the image and the associated filename and data
     NSString* imageMimeType;
     NSString* imageFilename;
     NSData*   imageData;
     switch (imageContentType) {
-        case PaperclipimageTypeJpeg:
+        case PaperclipImageTypeJpeg:
             imageMimeType = @"image/jpeg";
             imageFilename = @"upload.jpg";
             imageData     = UIImageJPEGRepresentation(image, imageQuality < 0.0f || imageQuality > 1.0f ? 1.0f : imageQuality);
@@ -116,13 +116,13 @@ const NSUInteger kDefaultBodySize = 100 * 1024;
     [self appendCrlfToRequestBody:requestBody];
     [requestBody appendData:imageData];
     [self appendCrlfToRequestBody:requestBody];
-    
+
     // Append the final boundary to denote end-of-body
     [requestBody appendData:[[NSString stringWithFormat:@"--%@--", kDefaultBoundary] dataUsingEncoding:NSASCIIStringEncoding]];
-    
+
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:requestBody];
-    
+
     return request;
 }
 
